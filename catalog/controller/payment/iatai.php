@@ -231,6 +231,7 @@ class ControllerPaymentIatai extends Controller {
                                 $logger->write('Transacción en modo prueba: ' . $this->config->get('iatai_order_status_accepted'));
 								$order_status_id = $this->config->get('iatai_order_status_accepted');
 								$logger->write('Datos de la transacción: autorización->'.$this->request->post['auth_code'].' estado->'.$state.' ' . ($order_id));
+                                $this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 							}
                             // la transacción es en ambiente productivo
                             else {
@@ -242,7 +243,6 @@ class ControllerPaymentIatai extends Controller {
 									$status_message = 'Datos de la transacción: estado->'.$state.' WSDL Web Service: Message ' . $verify->mensaje . ', Código Respuesta: '.$verify->codigoRespuesta.' , Código Autorización: '.$verify->codigoAutorizacion;
 								} else {
 									$logger->write('Error en la validación de los parámetros recibidos y la consulta WS! '.' Estado: '.$state . ($hashstr));
-									//$status_message = 'iatai :: Transaction data MISMATCH! '.' Estado: '.$state . ($hashstr);
 									$order_status_id = $this->config->get('iatai_order_status_pending');
 								}
 							}
@@ -277,12 +277,12 @@ class ControllerPaymentIatai extends Controller {
 					if (!$order_info['order_status_id']) {
 						if(!in_array($order_status_id, array('7','10'))){
                             $logger->write('Actualizando estados de la orden: $order_id='.$order_id.' order_status_id='.$order_status_id.' status_message='.$status_message);
-						$this->model_checkout_order->confirm($order_id, $order_status_id,$status_message);
+                        $this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 						}
 					} else {
 						if(!in_array($order_status_id, array('7','10'))){
 							$logger->write('Actualizando estado de la orden: $order_id='.$order_id.' order_status_id='.$order_status_id.' status_message='.$status_message);
-							$this->model_checkout_order->update($order_id, $order_status_id,$status_message);
+                            $this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 						}
 					}
 
