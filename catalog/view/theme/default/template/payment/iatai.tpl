@@ -1,5 +1,5 @@
 <?php if ($testmode) { ?>
-<div class="warning"><?php echo $text_test; ?></div>
+<div class="alert alert-warning"><?php echo $text_test; ?></div>
 <?php } ?>
 <form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="cmd" value="_cart" />
@@ -22,8 +22,6 @@
   <input type="hidden" name="bill_to_address_postal_code" value="<?php echo $zipCode; ?>" />
   <input type="hidden" name="bill_to_address_country" value="<?php echo $billingCountry; ?>" />
   <input type="hidden" name="bill_to_email" value="<?php echo $buyerEmail; ?>" />
-   <!-- <input type="hidden" name="bill_to_phone" value="<?php echo $phone; ?>" /> -->
-
   <input type="hidden" name="signed_field_names" value="<?php echo $signed_field_names; ?>" />
   <input type="hidden" name="unsigned_field_names" value="<?php echo $unsigned_field_names; ?>" />
   <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />  

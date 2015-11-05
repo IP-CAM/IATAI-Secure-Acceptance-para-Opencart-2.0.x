@@ -23,6 +23,7 @@ class ModelPaymentIatai extends Model {
       		$method_data = array( 
         		'code'       => 'iatai',
         		'title'      => $this->language->get('text_title'),
+                'terms'      =>  $this->language->get('text_title'),
 				'sort_order' => $this->config->get('iatai_sort_order')
       		);
     	}
